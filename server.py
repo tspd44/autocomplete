@@ -75,7 +75,7 @@ class MyHttpServer(http.server.SimpleHTTPRequestHandler):
 
 
 # Open and read the dictionnary
-f = open('dic2', 'r')
+f = open('dic', 'r')
 fileContent = f.readlines()
 
 # Initiate dictionnary class
