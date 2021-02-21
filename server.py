@@ -20,8 +20,7 @@ class Dictionnary:
   def addWord(self,word):
     """
     Used to insert a word in the datastructure
-    self.next : a dict containing at most 26 nodes (26 letters)
-    self.leaf : a boolean value to check if current node is a leaf
+    word : the word to be inserted
     """
     i=0
     # Browse the datastructure and create new nodes if necessary
