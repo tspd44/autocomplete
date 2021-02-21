@@ -4,13 +4,25 @@ import socketserver
 
 
 class Dictionnary:
-
+  """
+  The Dictionnary object contains all the words stored in a TRIE
+  """
   def __init__(self):
+    """
+    The data structure
+    self.next : a dict containing at most 26 nodes (26 letters)
+    self.leaf : a boolean value to check if current node is a leaf
+    """
     self.next={}
     # Indicator for terminal node (end of word)
     self.leaf=False
 
   def addWord(self,word):
+    """
+    Used to insert a word in the datastructure
+    self.next : a dict containing at most 26 nodes (26 letters)
+    self.leaf : a boolean value to check if current node is a leaf
+    """
     i=0
     # Browse the datastructure and create new nodes if necessary
     while i < len(word):
@@ -26,27 +38,38 @@ class Dictionnary:
         self.leaf = False
       i += 1
 
-  def browseAndPrint(self, sstr, res):
+  def browse(self, sstr, res):
+    """
+    Browse the data structure and store the leaf in res
+    sstr : the search prefix string
+    res : list used to store the result
+    """
     if self.leaf and len(res) < 4:
       res.append(sstr)
+    # Limit the result to 4 strings
     if len(res) == 4:
       return
     for i in self.next:
-      self.next[i].browseAndPrint(sstr + i, res)
+      self.next[i].browse(sstr + i, res)
 
-  def autocomplete(self, sstr):
+  def autocomplete(self, pstr):
+    """
+      Used to browse the data structure and store the leaf in res
+      pstr : the search prefix string
+      res : list used to store the result
+    """
     l = []
     i = 0
     # check if the search string exists
-    while i < len(sstr):
-      letter = sstr[i]
+    while i < len(pstr):
+      letter = pstr[i]
       if letter in self.next:
         self = self.next[letter]
       else:
         return l
       i += 1
-    # if prefix exists, print all the leaves
-    self.browseAndPrint(sstr, l)
+    # if prefix exists, find all the leaves
+    self.browse(pstr, l)
     return l 
 
 class MyHttpServer(http.server.SimpleHTTPRequestHandler):
@@ -69,7 +92,10 @@ class MyHttpServer(http.server.SimpleHTTPRequestHandler):
     print("Searching for {}".format(searchToken))
 
     global dic
-    print(dic.autocomplete(searchToken))
+    res = dic.autocomplete(searchToken)
+
+    print(res)
+    self.wfile.write(bytes(', '.join(res), "utf8"))
 
     return
 
@@ -80,9 +106,10 @@ fileContent = f.readlines()
 
 # Initiate dictionnary class
 dic = Dictionnary()
-# Fill the dictionnary
+
+# Fill the dictionnary with non case sensitive data
 for line in fileContent:
-  dic.addWord(line.strip())
+  dic.addWord(line.lower().strip())
 
 # Create an object of the http server
 handler_object = MyHttpServer
