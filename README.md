@@ -4,7 +4,7 @@ Test ANSSI - autocomplete
 ## Structure de donnée
 - La structure de donnée choisie est un TRIE. ( Arbre n-aire stockant les lettres a-z à chaque niveau de l'arbre, et permettant un parcours du dictionnaire aisé). La complexité liée à la recherche du motif X est O(n), où n est la longueur de la chaîne X.
 
-## Amelioration
+## Ameliorations
 ### Mémoire
 - Utilisation d'un arbre ternaire semble être moins coûteux en mémoire
 ### Prediction
@@ -25,7 +25,7 @@ $ python3 server.py
  - curl http://localhost:8000/autocomplete?query=crypt
  - navigateur web
 
-### Dictionnaires
+## Dictionnaires
 
 - "dic" contient les mots du sujet
 - "dic2" comprends plus de 450.000 mots
