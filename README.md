@@ -7,9 +7,9 @@ La structure de donnée choisie est un TRIE. ( Arbre n-aire stockant les lettres
 ## Serveur
 Le serveur est un simple http.server de la librairie standard Python
 
-**
-Execution :
+# Execution serveur :
+$ python3 server.py
 
-Serveur : $ python3 server.py
-Client : wget http://localhost/autocomplete?query=crypt
+# Exetution client :
+$ wget http://localhost:8000/autocomplete?query=crypt
 
